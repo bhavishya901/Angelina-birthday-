@@ -979,6 +979,7 @@
     border-radius:50%;
     animation:pageLoaderSpin .85s linear infinite;
     box-shadow:0 0 28px rgba(233,104,145,.22);
+}
 .page-loader-heart{
     position:absolute;
 
@@ -1455,20 +1456,20 @@
             }
         }
 
- surpriseButton.addEventListener("click", async () => {
+        surpriseButton.addEventListener("click", async () => {
 
-    launchSurpriseExplosion();
+            launchSurpriseExplosion();
 
-    try {
-        if (birthdayMusic.paused) {
-            await birthdayMusic.play();
-            setMusicState(true);
-        }
-    } catch (error) {
-        console.log("Autoplay blocked:", error);
-    }
+            try {
+                if (birthdayMusic.paused) {
+                    await birthdayMusic.play();
+                    setMusicState(true);
+                }
+            } catch (error) {
+                console.log("Autoplay blocked:", error);
+            }
 
-});
+        });
 
         /* =========================
            MUSIC BUTTON
@@ -1562,8 +1563,18 @@ const singleEnter = document.getElementById("singleEnter");
 
 const pageLoader = document.getElementById("pageLoader");
 
-function openBirthdayPage(){
+async function openBirthdayPage(){
     if (pageLoader.classList.contains("show")) return;
+
+    // Trigger music playback right on button click
+    try {
+        if (birthdayMusic.paused) {
+            await birthdayMusic.play();
+            setMusicState(true);
+        }
+    } catch (error) {
+        console.log("Autoplay blocked:", error);
+    }
 
     // First hide Page 1 and immediately show the loading screen.
     singlePageIntro.classList.add("hide");
