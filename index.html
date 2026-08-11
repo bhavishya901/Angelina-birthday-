@@ -1067,6 +1067,39 @@ body.dark-mode #pageLoader{background:#171317 !important;}
 }
 
 
+
+/* =========================
+   PHOTO PROTECTION
+   Blocks normal long-press/context-menu, dragging and selection.
+========================= */
+.memory,
+.memory img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    user-drag: none;
+}
+
+.memory {
+    position: relative;
+}
+
+.memory img {
+    pointer-events: none;
+}
+
+.memory::after {
+    content: "";
+    position: absolute;
+    inset: 20px 20px 65px 20px;
+    z-index: 5;
+    background: transparent;
+    border-radius: 0;
+    -webkit-touch-callout: none;
+    user-select: none;
+}
+
 </style>
 </head>
 
@@ -1680,6 +1713,32 @@ if (window.location.hash === "#birthday") {
     history.replaceState({}, "", window.location.pathname + window.location.search);
 }
 
+
+
+/* =========================
+   PHOTO PROTECTION
+========================= */
+document.addEventListener("contextmenu", (e) => {
+    if (e.target.closest(".memory")) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+});
+
+document.addEventListener("dragstart", (e) => {
+    if (e.target.closest(".memory")) {
+        e.preventDefault();
+        return false;
+    }
+});
+
+document.addEventListener("selectstart", (e) => {
+    if (e.target.closest(".memory")) {
+        e.preventDefault();
+        return false;
+    }
+});
 </script>
 
 
